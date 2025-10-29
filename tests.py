@@ -1,22 +1,10 @@
 # tests.py
-from functions.get_file_content import get_file_content
+from functions.write_file import write_file
 
 def test():
-    print("=====Content of main.py=====")
-    print(get_file_content("calculator", "main.py"))
-    print("==========\n")
-
-    print("=====Content of pkg/calculator.py=====")
-    print(get_file_content("calculator", "pkg/calculator.py"))
-    print("==========\n")
-
-    print("=====Content of /bin/cat=====")
-    print(get_file_content("calculator", "/bin/cat"))
-    print("==========\n")
-
-    print("=====Content of pkg/does_not_exist.py=====")
-    print(get_file_content("calculator", "pkg/does_not_exist.py"))
-    print("==========\n")
+    print(write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum"))
+    print(write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"))
+    print(write_file("calculator", "/tmp/temp.txt", "this should not be allowed"))
 
 
 
