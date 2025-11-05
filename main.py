@@ -7,7 +7,11 @@ from google.genai import types
 def main():
     if len(sys.argv) < 2:
         sys.exit("You have to provide a prompt.")
-    user_prompt = sys.argv[1]
+    args = []
+    for arg in sys.argv[1:]:
+        if not arg.startswith("--"):
+            args.append(arg)
+    user_prompt = " ".join(args)
 
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
