@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from config import system_prompt, available_functions
+from config import system_prompt, available_functions, call_function
 
 def main():
     if len(sys.argv) < 2:
@@ -33,9 +33,20 @@ def main():
     
     if not response.function_calls:
         print(response.text)
-        
+
+    # Back where you handle the response from the model generate_content, instead of simply printing the name of the function the LLM decides to call, 
+    # use call_function.
+    # The types.Content that we return from call_function should have a .parts[0].function_response.response within.
+    # If it doesn't, raise a fatal exception of some sort.
+    # If it does, and verbose was set, print the result of the function call like this:
+    # print(f"-> {function_call_result.parts[0].function_response.response}")    
     for function_call_part in response.function_calls:
-        print(f"Calling function: {function_call_part.name}({function_call_part.args})")
+        function_call_result = call_function(function_call_part, True)
+        if "--verbose" in sys.argv:
+            try:
+                print(f"-> {function_call_result.parts[0].function_response.response}")
+            except:
+                raise("No function_call_result.parts[0].function_response.response available")
 
     if "--verbose" in sys.argv: 
         print(f"User prompt: {user_prompt}")
