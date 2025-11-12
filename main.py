@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from config import system_prompt, available_functions, call_function
+from config import system_prompt
+from call_function import available_functions, call_function
 
 def main():
     if len(sys.argv) < 2:
