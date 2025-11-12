@@ -53,7 +53,11 @@ schema_run_python_file = types.FunctionDeclaration(
             ),
             "args": types.Schema(
                 type=types.Type.ARRAY,
-                description="The arguments that the file is called with. If not provided, no arguments are used.",
+                description="The arguments that the python file is called with. If not provided, no arguments are used.",
+                items=types.Schema(
+                    type=types.Type.STRING,
+                    description="An individual argument.",
+                ),
             ),
         },
     ),
