@@ -1,5 +1,6 @@
 import os
 from subprocess import run
+from google.genai import types
 
 # Use the subprocess.run function to execute the Python file and get back a "completed_process" object. Make sure to:
 # - Set a timeout of 30 seconds to prevent infinite execution
@@ -39,3 +40,21 @@ def run_python_file(working_directory, file_path, args=[]):
         return ret_s
     except Exception as e:
         return f"Error: executing Python file: {e}"
+    
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Runs python file with arguments on the specified path, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The file path to run, relative to the working directory.",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                description="The arguments that the file is called with. If not provided, no arguments are used.",
+            ),
+        },
+    ),
+)
